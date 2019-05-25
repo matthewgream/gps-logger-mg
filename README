@@ -1,0 +1,171 @@
+
+- make waypoint position get work (i.e. some buffering somewhere)
+- add initial command line interface for version
+- add uart handling for cli w/ 8bit support on cli interface
+	config:
+		command: true
+- walk through the command line interface, build it out w/ unit tests, one by one - get them all working (except for ymodem)
+- test them all
+- then get ymodem ones working
+- milestones: cli fully working
+	- all cli commands supported
+	- cli interfaced into configuration and start up
+
+- bug: you can default the config and lock yourself out?
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+	- investigate SPI working properly
+	- i/o layering to fix FAT emulation annoyance
+		compress & cache --> callback handlers
+		1. compress -> cache -> [file_io]
+		2. compress -> [file_io]
+		3. cache -> [file_io]
+		file_io:
+		= emu_file
+		= fatfile+spisd
+	- uart tx buffering and rx soft-isr (stack until '\r\n' then soft-isr)
+	- gprof and performance 
+	- performance
+		- more efficient stratol and strtol
+		- improve strpad, strcat, strcpy,
+		- inline uart1_getc, spi_put, spi_get, spi_acquire, spi_release
+		- fix csv handling in next version
+		- improve: format_encode_CSV, format_encode_longitude, format_encode_latitude
+		- cachefile_write
+		- card_sector_write
+	- change output files: size1+size2+4k+4k <= 24k
+			file:
+				cache<size1>, compress<4k>, format 
+			serial:
+				cache<size2>, compress<4k>, format
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+next (gps features):
+- clock output
+- rework the gps module substantially
+- do gps module config handling
+- do a separate gps convert tool
+- unique option
+- debug control interface for gps
+- review firmware for gps logger 2.4 and copy new features
+	- hold off time
+	- sleep time
+- make separate gps_convert tool
+	- input: raw data
+	- output: raw, nmea, kml, csv ... etc
+- strict gps nmea sentence decoding: check all the values in detail
+- lazy decode
+- rework the GPS module entirely, and do some unit tests for it
+- need to remove the device and mod the pcb so can send tsip
+- do tsp commands
+- enhanced sensitivity mode under tsp
+- is there a more efficient csv* (later)
+- delay time for gps lock
+- filename to include date/timestamp, or customisable template
+- support higher nmea rates to improve duty cycle
+- release partial build and allow gps module to be customisable
+- xmodem for transfer of GPS files to avoid opening case
+- selective build options:
+	- pass only, disk only
+	- certain formats & encodings only
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+em-406:
+
+programming options:
+
+$PSRF<MID>,<DATA>*<CKSUM>\r\n
+
+100:
+0,9600,8,1,0 => SiRF binary at 9600
+1,4800,8,1,0 => NMEA at 4800
+
+103:
+00,00,00,01 => msg=00,mode=00 (set rate), 00=frequency (00 ... 255 seconds)
+msgs -> 0=gga,1=gll,2=gsa,3=gsv,4=rmc,5=vtg,6=mss (if supported),8=zda (if supported)
+(freq mul by tricklepower)
+
+151:
+01 => WAAS enable
+
+Example 1: Switch to SiRF Binary protocol at 9600,8,N,1
+$PSRF100,0,9600,8,1,0*0C<CR><LF>
+Example 2: Switch to User1 protocol at 38400,8,N,1
+$PSRF100,4,38400,8,1,0*38<CR><LF>
+
+sirf binary:
+0xa0,0xa2, ... two byte payload length ... , .. payload .., two byte checksum, 0xB0,0xB3
+payload length=msb first (less than 0x7F)
+checksum=sum of payload & (2^15 - 1) (i.e. high < 0x7F)
+
+53 ?
+129 switch to nmea protocol ... yes
+151 set trickle power mode ... yes
+165 set uart config, so enable sirf input and nmea output
+172 clear all memory on start up ... yes (configurable)
+
+- switch to sirf mode
+- do config
+- config the nmea sentences 129
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+  1.9     490.53    10.68 13191785     0.00     0.00  util_stratol [20]
+  0.9     506.78     5.03 16280471     0.00     0.00  util_csv_field_extract [28]
+  0.7     515.84     4.18 13191785     0.00     0.00  util_strtol [30]
+  0.4     529.52     2.00  2638357     0.00     0.01  gps_format_encode_CSV [16]
+  0.3     533.25     1.78  5276714     0.00     0.00  util_strpad [38]
+  0.3     539.60     1.52  2638357     0.00     0.00  cachefile_write [32]
+  0.2     549.35     1.05  7915092     0.00     0.00  util_csv_field_next [50]
+  0.2     552.99     0.87  7915075     0.00     0.00  util_strcat [53]
+  0.1     559.87     0.53  3139547     0.00     0.02  util_poller_process [8]
+  0.1     560.35     0.47  5276716     0.00     0.00  util_strcpy [63]
+  0.1     560.82     0.47  2638357     0.00     0.00  gps_format_encode_longitude [22]
+  0.1     561.29     0.46  2638357     0.00     0.00  gps_format_encode_latitude [23]
+  0.0     565.04     0.22  2640759     0.00     0.00  cachefile_flush [73]
+  0.0     565.45     0.20  3139546     0.00     0.00  lpc21XX_led_enable [75]
+  0.0     565.64     0.19  5279121     0.00     0.00  util_memcpy [76]
+  0.0     565.95     0.16  3139547     0.00     0.00  lpc21XX_led_disable [77]
+  0.0     566.12     0.00     2538     0.00     0.00  fat_write [80]
+  0.0     566.13     0.00     2541     0.00     0.00  fat_resume [83]
+  0.0     566.13     0.00     2539     0.00     0.00  fat_flush [84]
+  0.0     566.13     0.00     2538     0.00     0.00  lpc21XX_led_toggle [86]
+  0.0     566.13     0.00      194     0.01     0.01  util_strcmpi [87]
+  0.0     566.13     0.00     2541     0.00     0.00  fat_suspend [102]
+  0.0     566.13     0.00     2538     0.00     0.00  gps_file_update [85]
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+  1.8     507.08    10.68 13191780     0.00     0.00  util_stratol [21]
+  0.8     522.64     4.89 16280469     0.00     0.00  util_csv_field_extract [32]
+  0.8     527.34     4.69 67803080     0.00     0.00  lpc21XX_spi_put [26]
+  0.7     531.53     4.19 13191780     0.00     0.00  util_strtol [33]
+  0.5     542.08     2.69   130136     0.02     0.07  card_sector_write [23]
+  0.3     555.05     1.77  2638356     0.00     0.01  gps_format_encode_CSV [15]
+  0.3     556.74     1.69  5276712     0.00     0.00  util_strpad [43]
+  0.2     563.85     1.35  2638356     0.00     0.00  cachefile_write [20]
+  0.2     573.81     0.98  7915089     0.00     0.00  util_csv_field_next [56]
+  0.1     579.35     0.75  7915068     0.00     0.00  util_strcat [63]
+  0.1     581.25     0.59  3139549     0.00     0.02  util_poller_process [8]
+  0.1     583.43     0.48  2638356     0.00     0.00  gps_format_encode_longitude [27]
+  0.1     583.90     0.47  2638356     0.00     0.00  gps_format_encode_latitude [28]
+  0.1     584.36     0.46  5276712     0.00     0.00  util_strcpy [70]
+  0.0     587.32     0.27  2640758     0.00     0.00  cachefile_flush [22]
+  0.0     588.20     0.21     2538     0.08     3.33  fat_write [24]
+  0.0     588.58     0.18  5279121     0.00     0.00  util_memcpy [81]
+  0.0     588.71     0.14  3139548     0.00     0.00  lpc21XX_led_enable [84]
+  0.0     588.92     0.08  3139549     0.00     0.00  lpc21XX_led_disable [86]
+  0.0     589.12     0.02   709771     0.00     0.00  lpc21XX_spi_get [94]
+  0.0     589.18     0.02    60905     0.00     0.00  util_timer_restart [83]
+  0.0     589.20     0.02    60906     0.00     0.00  lpc21XX_timer0_start [88]
+  0.0     589.25     0.01    58321     0.00     0.00  lpc21XX_timer0_stop [89]
+  0.0     589.27     0.01   130504     0.00     0.00  lpc21XX_spi_acquire [100]
+  0.0     589.28     0.01      366     0.02     0.04  card_sector_read [97]
+  0.0     589.29     0.00   130505     0.00     0.00  lpc21XX_spi_release [103]
+  0.0     589.30     0.00    60907     0.00     0.00  lpc21XX_timer0_suspend [105]
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+

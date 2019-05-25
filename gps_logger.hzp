@@ -1,0 +1,57 @@
+<!DOCTYPE CrossStudio_Project_File>
+<solution version="1" Name="gps_logger" >
+  <project Name="gps_logger" >
+    <configuration Target="LPC2138" property_groups_file_path="$(StudioDir)/targets/Philips_LPC210X/propertyGroups.xml" linker_memory_map_file="$(StudioDir)/targets/Philips_LPC210X/Philips_LPC2138_MemoryMap.xml" project_directory="" link_include_startup_code="No" project_type="Executable" linker_printf_fp_enabled="No" batch_build_configurations="ARM Flash Debug - V1.0;ARM Flash Debug - V2.4;ARM Flash Release - V1.0;ARM Flash Release - V2.4" Name="Common" linker_output_format="hex" />
+    <configuration arm_target_flash_loader_file_path="$(StudioDir)/targets/Philips_LPC210X/Release/Loader.exe" target_reset_script="FLASHReset()" Name="Flash" />
+    <folder Name="Source Files" >
+      <configuration filter="c;cpp;cxx;cc;h;s;asm;inc" Name="Common" />
+      <file file_name="main.c" Name="main.c" />
+      <file file_name="common.h" Name="common.h" />
+      <file file_name="mod_lpc21XXhal.h" Name="mod_lpc21XXhal.h" />
+      <file file_name="mod_lpc21XXhal.c" Name="mod_lpc21XXhal.c" />
+      <file file_name="mod_util.h" Name="mod_util.h" />
+      <file file_name="mod_util.c" Name="mod_util.c" />
+      <file file_name="mod_config.h" Name="mod_config.h" />
+      <file file_name="mod_config.c" Name="mod_config.c" />
+      <file file_name="mod_packlzari.h" Name="mod_packlzari.h" />
+      <file file_name="mod_packlzari.c" Name="mod_packlzari.c" />
+      <file file_name="mod_filecache.h" Name="mod_filecache.h" />
+      <file file_name="mod_filecache.c" Name="mod_filecache.c" />
+      <file file_name="mod_filefatfs.h" Name="mod_filefatfs.h" />
+      <file file_name="mod_filefatfs.c" Name="mod_filefatfs.c" />
+      <file file_name="mod_filespisd.h" Name="mod_filespisd.h" />
+      <file file_name="mod_filespisd.c" Name="mod_filespisd.c" />
+      <file file_name="mod_gps.h" Name="mod_gps.h" />
+      <file file_name="mod_gps.c" Name="mod_gps.c" />
+      <file file_name="mod_gpsinput.h" Name="mod_gpsinput.h" />
+      <file file_name="mod_gpsinput.c" Name="mod_gpsinput.c" />
+      <file file_name="mod_gpsoutput.h" Name="mod_gpsoutput.h" />
+      <file file_name="mod_gpsoutput.c" Name="mod_gpsoutput.c" />
+      <file file_name="mod_gpsformat.h" Name="mod_gpsformat.h" />
+      <file file_name="mod_gpsformat.c" Name="mod_gpsformat.c" />
+      <file file_name="mod_gpsprocess.h" Name="mod_gpsprocess.h" />
+      <file file_name="mod_gpsprocess.c" Name="mod_gpsprocess.c" />
+    </folder>
+    <folder Name="System Files" >
+      <file file_name="$(StudioDir)/source/crt0.s" Name="crt0.s" />
+      <file file_name="$(StudioDir)/targets/Philips_LPC210X/Philips_LPC210X_Startup.s" Name="Philips_LPC210X_Startup.s" />
+      <file file_name="$(StudioDir)/targets/flash_placement.xml" Name="flash_placement.xml" />
+      <file file_name="$(StudioDir)/targets/Philips_LPC210X/Philips_LPC210X_Target.js" Name="Philips_LPC210X_Target.js" >
+        <configuration Name="Common" file_type="Reset Script" />
+      </file>
+    </folder>
+    <configuration arm_interwork="No" c_preprocessor_definitions="VECTORED_IRQ_INTERRUPTS" build_treat_warnings_as_errors="Yes" arm_linker_fiq_stack_size="0" arm_linker_irq_stack_size="256" gcc_optimization_level="Level 3" c_additional_options="-Wall -Werror -Wextra -pedantic" linker_printf_fp_enabled="No" linker_printf_width_precision_supported="No" linker_printf_fmt_level="long" Name="Debug" arm_use_gcc_libraries="No" />
+    <configuration arm_interwork="No" c_preprocessor_definitions="VECTORED_IRQ_INTERRUPTS" build_treat_warnings_as_errors="Yes" arm_linker_fiq_stack_size="0" arm_linker_irq_stack_size="256" gcc_optimization_level="Level 3" c_additional_options="-Wall -Werror -Wextra -pedantic" linker_printf_fp_enabled="No" linker_printf_width_precision_supported="No" linker_printf_fmt_level="long" Name="Release" arm_use_gcc_libraries="No" />
+  </project>
+  <configuration arm_library_instruction_set="ARM" c_preprocessor_definitions="__ARM" arm_instruction_set="ARM" hidden="Yes" Name="ARM" />
+  <configuration c_preprocessor_definitions="INLINE" hidden="Yes" Name="Inline" />
+  <configuration c_preprocessor_definitions="__FLASH_BUILD" hidden="Yes" Name="Flash" />
+  <configuration c_preprocessor_definitions="HARDWARE_10" hidden="Yes" Name="V10" />
+  <configuration c_preprocessor_definitions="HARDWARE_24" hidden="Yes" Name="V24" />
+  <configuration c_preprocessor_definitions="DEBUG" link_include_startup_code="No" build_debug_information="Yes" hidden="Yes" Name="Debug" />
+  <configuration c_preprocessor_definitions="NDEBUG" link_include_startup_code="No" build_debug_information="No" hidden="Yes" Name="Release" />
+  <configuration inherited_configurations="ARM;Flash;Inline;Debug;V10" Name="ARM Flash Debug - V1.0" />
+  <configuration inherited_configurations="ARM;Flash;Inline;Release;V10" Name="ARM Flash Release - V1.0" />
+  <configuration inherited_configurations="ARM;Flash;Inline;Debug;V24" Name="ARM Flash Debug - V2.4" />
+  <configuration inherited_configurations="ARM;Flash;Inline;Release;V24" Name="ARM Flash Release - V2.4" />
+</solution>

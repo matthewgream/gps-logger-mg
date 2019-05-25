@@ -1,0 +1,35 @@
+
+################################################################################
+
+@@COPYRIGHT@@
+
+This is GPS Logger MG v@@VERSION@@, available for personal and non-commercial use
+(please see the accompanying LICENSE for details).
+
+In this release package, you should find the following:
+
+* Firmware images for use with the SparkFun series of GPS Loggers, for both
+  V1.0 and V2.4 versions, in both Debug and Release formats. Use the Philips
+  LPC2000 Flash Utility, or equivalent, to upload these to the devices.
+
+* Emulator binaries for use with FreeBSD (release 6) or Linux (kernel 2.6)
+  ia32 platforms. These are statically linked in ELF format.
+
+* Utilities, of various sorts, for working with the release, including:
+
+    * a generic standalone lz unpack tool, for unpacking compressed data,
+      which must be built into an executable with a 'C' compiler.
+
+    * a standalone csv binary unpack tool, for unpacking binary encoded
+      CSV output, which requires a perl v5 (or compatible) interpreter.
+
+* Sample material, either used as input to, or to illustrate output from, the
+  firmware.
+
+* Userguide in PDF format, covering installation and operation of the firmware.
+  You will need a PDF reader, such as Adobe Acrobat.
+
+* Ancillary release material, such as this README and the LICENSE.
+
+################################################################################
+

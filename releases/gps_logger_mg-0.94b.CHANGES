@@ -1,0 +1,18 @@
+#139 (2007-07-10): Tagged: Release 0.94b.
+#138 (2007-07-10): Critical: fixed uninitialised data defect in recent dual 'pass' & 'file'
+                   output modes, causing extraneous data to be sent to the serial port if
+                   'file' was configured, but 'pass' wasn't.
+#136 (2007-07-10): Additional emulator command line option '--cfg-nowrite' prevents the
+                   default GPSCONFG.TXT from being created. Useful when driving the emulator
+                   entirely from command line options.
+#134 (2007-07-10): Implement INLINE mechanism (pre-processor & makefile stunts) for selected
+                   LPC HAL functions identified by gprof, in particular the spi's. This should
+                   improve throughput on SD writes.
+#133 (2007-07-10): Implement a uartN_gets to reduce overhead of multiple calls to uartN_getc,
+                   this should help inbound serial I/O.
+#131 (2007-07-10): Prevent 'compress' from applying to 'pass' output: it's for 'file' only.
+                   This means if both 'pass' and 'file' are active and 'compress' is also set,
+                   then the 'file' content will be compressed, but the 'pass' content won't.
+                   You can't compress with 'pass' at all (for now, to be revised later).
+#129 (2007-07-10): Allow convenience '***' wildcard to be used in 'format_nmea_sentences'.
+#128 (2007-07-10): Implement automatic CHANGES support from 'svn log' (script, build, etc).

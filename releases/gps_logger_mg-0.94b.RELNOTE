@@ -1,0 +1,44 @@
+
+I'm really pleased to announce release V0.94 of the GPS Logger MG for Spark Fun
+GPS Datalogger V1.0 (Trimble Lassen iQ) and V2.4 (US GlobalSat EM-406).
+
+This release includes the following highlights:
+
+- firmware now supports the Spark Fun GPS Datalogger V2.4 (EM-406) as well as the
+  original V1.0 (Lassen iQ).
+
+- emulator now provided for Linux 2.6 as well as FreeBSD 6 systems, and now works
+  with either raw FAT images or standard file system I/O.
+
+- compressed output, both generic LZARI based and specific CSV binary encoding,
+  implemented to substantially reduce card writes and sizes thus improve power
+  efficiency. code for two standalone decompression tools (perl & 'C') provided.
+  performance against large sample sets fully evaluated and documented.
+  
+- provided a new 'passthrough' serial mode, for real-time direct GPS output to
+  other devices, e.g. a PC. verified compatibility testing with numerous PC based
+  applications (e.g. Microsoft AutoRoute 2007, Google Earth, NetStumbler, etc).
+
+- various under-the-cover power, performance and feature improvements, e.g. data
+  structures optimised to reduce RAM footprint, brown-out shutdown triggering, 
+  input data robustness (both GPS & config), lazy FAT cluster map updates, uart
+  IRQ handling, timer delta-queue implementation, etc. code profiling also used.
+
+- improved test coverage, with more built-in unit-test cases, greater splint and
+  compiler verification (under both FreeBSD and Linux), and evaluation against 
+  large sample sets.
+
+The complete details, with other features and changes not listed here, about the
+release, its installation and its use, can be found in the userguide.
+
+The package and userguide are available for download from the project blog at
+http://gpslogger.blogspot.com.
+
+This is V0.94 release. If any issues need to be rectified, then I plan to make
+an intermediate V0.95 release within a few weeks. Timely feedback would help!
+
+The roadmap from there is to aim for a V0.96 release to focus on restructuring
+and improving the GPS data processing pipeline, with the capability to directly
+configure the GPS module for use. Following this, a V0.98 will focus on power
+and performance optimisation.
+

@@ -1,0 +1,55 @@
+<!DOCTYPE CrossStudio_for_ARM_Session_File>
+<session>
+ <Breakpoints/>
+ <ExecutionCountWindow/>
+ <Memory1>
+  <MemoryWindow autoEvaluate="0" addressText="" numColumns="8" sizeText="" dataSize="1" radix="16" addressSpace="" />
+ </Memory1>
+ <Memory2>
+  <MemoryWindow autoEvaluate="0" addressText="" numColumns="8" sizeText="" dataSize="1" radix="16" addressSpace="" />
+ </Memory2>
+ <Memory3>
+  <MemoryWindow autoEvaluate="0" addressText="" numColumns="8" sizeText="" dataSize="1" radix="16" addressSpace="" />
+ </Memory3>
+ <Memory4>
+  <MemoryWindow autoEvaluate="0" addressText="" numColumns="8" sizeText="" dataSize="1" radix="16" addressSpace="" />
+ </Memory4>
+ <Project>
+  <ProjectSessionItem path="gps_logger" name="unnamed" />
+  <ProjectSessionItem path="gps_logger;gps_logger" name="unnamed" />
+  <ProjectSessionItem path="gps_logger;gps_logger;Source Files" name="unnamed" />
+ </Project>
+ <Register1>
+  <RegisterWindow unsignedDisplays="" asciiDisplays="" octalDisplays="" visibleGroups="" decimalDisplays="" binaryDisplays="" />
+ </Register1>
+ <Register2>
+  <RegisterWindow unsignedDisplays="" asciiDisplays="" octalDisplays="" visibleGroups="" decimalDisplays="" binaryDisplays="" />
+ </Register2>
+ <Register3>
+  <RegisterWindow unsignedDisplays="" asciiDisplays="" octalDisplays="" visibleGroups="" decimalDisplays="" binaryDisplays="" />
+ </Register3>
+ <Register4>
+  <RegisterWindow unsignedDisplays="" asciiDisplays="" octalDisplays="" visibleGroups="" decimalDisplays="" binaryDisplays="" />
+ </Register4>
+ <SourceNavigatorWindow/>
+ <TraceWindow>
+  <Trace wrap="Yes" type="1" enabled="Yes" />
+ </TraceWindow>
+ <Watch1>
+  <Watches active="1" />
+ </Watch1>
+ <Watch2>
+  <Watches active="0" />
+ </Watch2>
+ <Watch3>
+  <Watches active="0" />
+ </Watch3>
+ <Watch4>
+  <Watches active="0" />
+ </Watch4>
+ <Files>
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" x="16" debugPath="\\Core\public\Projects - Matthew\GPS\gps_logger_mg\mod_lpc21XXhal.c" y="768" useHTMLEdit="0" path="\\Core\public\Projects - Matthew\GPS\gps_logger_mg\mod_lpc21XXhal.c" left="0" selected="0" name="unnamed" top="765" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" x="9" debugPath="\\Core\public\Projects - Matthew\GPS\gps_logger_mg\main.c" y="163" useHTMLEdit="0" path="\\Core\public\Projects - Matthew\GPS\gps_logger_mg\main.c" left="0" selected="0" name="unnamed" top="162" />
+ </Files>
+ <ARMCrossStudioWindow activeProject="gps_logger" ignoreExceptions="" autoConnectTarget="/ARM Simulator" debugSearchFileMap="" fileDialogInitialDirectory="C:\Documents and Settings\Matthew Gream\My Documents" fileDialogDefaultFilter="*.cpp;*.cxx;*.cc;*.c;*.h" debugSearchPath="" buildConfiguration="ARM Flash Debug - V2.4" />
+</session>
